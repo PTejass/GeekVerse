@@ -50,7 +50,32 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = document.getElementById('message').value;
             
             if (name && email && message) {
-                alert('Thank you for your feedback, ' + name + '! We appreciate your comments.');
+                // Generate feedback content
+                const timestamp = new Date().toLocaleString();
+                const feedbackContent = `
+=====================================
+        FEEDBACK SUBMISSION REPORT
+=====================================
+
+Date & Time: ${timestamp}
+
+CUSTOMER DETAILS:
+Name: ${name}
+Email: ${email}
+
+FEEDBACK MESSAGE:
+${message}
+
+=====================================
+Thank you for your feedback!
+GeekVerse Team
+=====================================
+                `.trim();
+
+                // Download file
+                downloadFile(feedbackContent, `GeekVerse_Feedback_${Date.now()}.txt`);
+                
+                alert('Thank you for your feedback, ' + name + '!\nYour feedback has been saved and downloaded.');
                 this.reset();
             }
         });
@@ -82,3 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 });
+
+// Helper function to download file
+function downloadFile(content, filename) {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}

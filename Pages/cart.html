@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeekVerse - Shopping Cart</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <style>
         html, body {
             height: 100%;
@@ -157,9 +157,10 @@
         .continue-shopping {
             display: inline-block;
             margin-top: 2rem;
+            margin-right: 1rem;
             padding: 1rem 2rem;
             background-color: #E63946;
-            color: #000;
+            color: #fff;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
@@ -167,7 +168,32 @@
         }
 
         .continue-shopping:hover {
-            background-color: #00b3d4;
+            background-color: #c0261c;
+        }
+
+        .place-order-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: #00d41e;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .place-order-btn:hover {
+            background-color: #00a817;
+            box-shadow: 0 0 15px rgba(0, 212, 30, 0.5);
+        }
+
+        .place-order-btn:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
         }
     </style>
 </head>
@@ -175,9 +201,9 @@
     <header>
         <h1>GeekVerse</h1>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="index.html#products">Products</a>
-            <a href="index.html#feedback">Feedback</a>
+            <a href="../index.html">Home</a>
+            <a href="../index.html#products">Products</a>
+            <a href="../index.html#feedback">Feedback</a>
             <a href="cart.html">Cart</a>
         </nav>
         <div class="cart">🛒<span class="badge">0</span></div>
@@ -189,7 +215,7 @@
         <div id="cart-content">
             <div class="cart-empty">
                 <p>Your cart is empty!</p>
-                <a href="index.html#products" class="continue-shopping">Continue Shopping</a>
+                <a href="../index.html" class="continue-shopping">Continue Shopping</a>
             </div>
         </div>
     </section>
@@ -230,7 +256,7 @@
                 cartContent.innerHTML = `
                     <div class="cart-empty">
                         <p>Your cart is empty!</p>
-                        <a href="index.html#products" class="continue-shopping">Continue Shopping</a>
+                        <a href="../index.html#products" class="continue-shopping">Continue Shopping</a>
                     </div>
                 `;
                 return;
@@ -292,7 +318,10 @@
                         <span>Total Amount:</span>
                         <span>$${(totalAmount * 1.1).toFixed(2)}</span>
                     </div>
-                    <a href="index.html#products" class="continue-shopping">Continue Shopping</a>
+                    <div>
+                        <a href="../index.html#products" class="continue-shopping">Continue Shopping</a>
+                        <button class="place-order-btn" onclick="placeOrder(${totalAmount})">Place Order</button>
+                    </div>
                 </div>
             `;
 
@@ -346,6 +375,98 @@
             }
             
             displayCart();
+        }
+
+        function placeOrder(subtotal) {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            if (cartItems.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Group items
+            const groupedItems = {};
+            cartItems.forEach(item => {
+                if (groupedItems[item.name]) {
+                    groupedItems[item.name].quantity += 1;
+                    groupedItems[item.name].totalPrice += item.price;
+                } else {
+                    groupedItems[item.name] = {
+                        name: item.name,
+                        price: item.price,
+                        quantity: 1,
+                        totalPrice: item.price
+                    };
+                }
+            });
+
+            // Generate order content
+            const timestamp = new Date().toLocaleString();
+            const tax = subtotal * 0.1;
+            const total = subtotal * 1.1;
+
+            let orderContent = `
+=====================================
+           ORDER CONFIRMATION REPORT
+=====================================
+
+Order Date & Time: ${timestamp}
+Order ID: ORD-${Date.now()}
+
+ORDERED ITEMS:
+-------------------------------------
+`;
+
+            for (const [key, item] of Object.entries(groupedItems)) {
+                orderContent += `
+Item: ${item.name}
+Price: $${item.price.toFixed(2)} each
+Quantity: ${item.quantity}
+Item Total: $${item.totalPrice.toFixed(2)}
+-------------------------------------
+`;
+            }
+
+            orderContent += `
+
+ORDER SUMMARY:
+Subtotal: $${subtotal.toFixed(2)}
+Tax (10%): $${tax.toFixed(2)}
+Total Amount: $${total.toFixed(2)}
+
+=====================================
+Thank you for your order!
+Your order has been placed successfully.
+GeekVerse Team
+=====================================
+            `.trim();
+
+            // Download file
+            downloadOrderFile(orderContent, `GeekVerse_Order_${Date.now()}.txt`);
+
+            // Show success message
+            alert('✅ ORDER SUCCESSFUL!\n\nYour order has been placed and saved.\nThank you for shopping with GeekVerse!');
+
+            // Clear the cart
+            localStorage.removeItem('cartItems');
+            const badge = document.querySelector('.badge');
+            if (badge) {
+                badge.textContent = '0';
+            }
+
+            // Refresh display
+            displayCart();
+        }
+
+        function downloadOrderFile(content, filename) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         }
     </script>
 </body>
