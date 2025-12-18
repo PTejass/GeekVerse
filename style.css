@@ -64,6 +64,38 @@ nav a:hover {
     text-shadow: 0 0 5px #E63946;
 }
 
+/* Hamburger Menu Toggle */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    gap: 5px;
+    margin-left: auto;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #E63946;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(10px, 10px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
 section {
     padding: 4rem 2rem;
     text-align: center;
@@ -341,15 +373,147 @@ footer {
     h1 {
         font-size: 2rem;
     }
-    nav {
-        flex-direction: column;
-        gap: 0.5rem;
+
+    header {
+        padding: 1rem;
+        width: calc(100% - 2rem);
+        gap: 1rem;
     }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #000;
+        border-bottom: 3px solid #E63946;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav.active {
+        max-height: 300px;
+        padding: 1rem 0;
+    }
+
+    nav a {
+        display: block;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+        text-align: center;
+    }
+
+    nav a:last-child {
+        border-bottom: none;
+    }
+
+    body {
+        padding-top: 100px;
+    }
+
     .products {
         grid-template-columns: 1fr;
     }
+
     .product {
         width: 100%;
+    }
+
+    #intro h2 {
+        font-size: 2rem;
+    }
+
+    #intro p {
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 2rem 1rem;
+    }
+
+    .major-categories {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .major-card img {
+        height: 200px;
+    }
+
+    #about h2,
+    #products h2,
+    #feedback h2 {
+        font-size: 1.8rem;
+    }
+
+    .feedback-form {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    header {
+        padding: 0.8rem;
+        width: calc(100% - 1.6rem);
+    }
+
+    nav a {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    #intro h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    #intro p {
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 1.5rem 1rem;
+    }
+
+    .product {
+        width: 100%;
+    }
+
+    .major-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .major-card img {
+        height: 150px;
+    }
+
+    #about h2,
+    #products h2,
+    #feedback h2 {
+        font-size: 1.3rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        font-size: 0.9rem;
+        padding: 0.8rem;
     }
 }
 

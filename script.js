@@ -1,28 +1,47 @@
 // Cart functionality
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Add to cart buttons
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('header')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
-            // Get product details from the parent card
             const productCard = this.closest('.product');
             const productName = productCard.querySelector('h3').textContent;
             const productPriceText = productCard.querySelector('.price-tag').textContent;
             const productPrice = parseFloat(productPriceText.replace('$', ''));
 
-            // Add to cart data
             const cartItem = {
                 name: productName,
                 price: productPrice,
                 timestamp: new Date().getTime()
             };
 
-            // Save to localStorage
             let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             cartItems.push(cartItem);
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-            // Update UI
             this.textContent = 'Added!';
             this.style.backgroundColor = '#00b3d4';
             setTimeout(() => {
