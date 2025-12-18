@@ -207,7 +207,6 @@
             <a href="../index.html#feedback">Feedback</a>
             <a href="cart.html">Cart</a>
         </nav>
-        <div class="cart">🛒<span class="badge">0</span></div>
     </header>
 
     <section id="cart-section">
@@ -336,12 +335,6 @@
                 cartItems.splice(itemIndex, 1);
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
                 
-                // Update cart badge
-                const badge = document.querySelector('.badge');
-                if (badge) {
-                    badge.textContent = cartItems.length;
-                }
-                
                 displayCart();
             }
         }
@@ -354,12 +347,6 @@
                 cartData.push({ name: item.name, price: item.price });
                 localStorage.setItem('cartItems', JSON.stringify(cartData));
                 
-                // Update cart badge
-                const badge = document.querySelector('.badge');
-                if (badge) {
-                    badge.textContent = cartData.length;
-                }
-                
                 displayCart();
             }
         }
@@ -368,12 +355,6 @@
             let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             cartItems = cartItems.filter(item => item.name !== itemName);
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            
-            // Update cart badge
-            const badge = document.querySelector('.badge');
-            if (badge) {
-                badge.textContent = cartItems.length;
-            }
             
             displayCart();
         }
@@ -451,10 +432,6 @@ GeekVerse Team
 
             // Clear the cart
             localStorage.removeItem('cartItems');
-            const badge = document.querySelector('.badge');
-            if (badge) {
-                badge.textContent = '0';
-            }
 
             // Refresh display
             displayCart();

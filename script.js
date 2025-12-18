@@ -1,12 +1,6 @@
 // Cart functionality
-let cartCount = 0;
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Load cart count from localStorage
-    const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-    cartCount = savedCart.length;
-    document.querySelector('.badge').textContent = cartCount;
-
     // Add to cart buttons
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
@@ -29,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
             // Update UI
-            cartCount++;
-            document.querySelector('.badge').textContent = cartCount;
             this.textContent = 'Added!';
             this.style.backgroundColor = '#00b3d4';
             setTimeout(() => {

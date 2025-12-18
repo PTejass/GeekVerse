@@ -64,14 +64,6 @@ nav a:hover {
     text-shadow: 0 0 5px #E63946;
 }
 
-.cart {
-    display: none;
-}
-
-.badge {
-    display: none;
-}
-
 section {
     padding: 4rem 2rem;
     text-align: center;
@@ -358,11 +350,6 @@ footer {
     }
     .product {
         width: 100%;
-    }
-    .cart {
-        position: static;
-        transform: none;
-        margin-top: 1rem;
     }
 }
 
