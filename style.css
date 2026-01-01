@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Comic+Relief:wght@400;700&display=swap');
 
 body {
-    font-family:'Comic Relief','Comic Neue',  cursive, Arial, sans-serif;
+    font-family: 'Comic Relief', 'Comic Neue', cursive, Arial, sans-serif;
     margin: 0;
     padding: 0;
     padding-top: 120px;
     background-color: #000;
-    background-image: 
+    background-image:
         linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
         url('https://i.pinimg.com/736x/a3/12/77/a31277f463eee52e717e84ac59b0f00b.jpg');
     background-attachment: fixed;
@@ -296,7 +296,7 @@ section.animate {
 }
 
 #feedback {
-    
+
     padding: 3rem 2rem;
 }
 
@@ -368,6 +368,20 @@ footer {
     padding: 1.5rem;
     border-top: 2px solid #E63946;
 }
+
+/* Back to Home Link Styling */
+.back-home-link {
+    color: #E63946;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+    font-size: inherit;
+}
+
+.back-home-link:hover {
+    color: #00b3d4;
+    text-shadow: 0 0 8px rgba(0, 179, 212, 0.6);
+}
+
 
 @media (max-width: 768px) {
     h1 {
@@ -620,4 +634,3 @@ footer {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
-

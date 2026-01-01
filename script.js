@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Feedback form submission
     const feedbackForm = document.querySelector('.feedback-form');
     if (feedbackForm) {
         feedbackForm.addEventListener('submit', function(e) {
@@ -61,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = document.getElementById('message').value;
             
             if (name && email && message) {
-                // Generate feedback content
                 const timestamp = new Date().toLocaleString();
                 const feedbackContent = `
 =====================================
@@ -83,7 +81,6 @@ GeekVerse Team
 =====================================
                 `.trim();
 
-                // Download file
                 downloadFile(feedbackContent, `GeekVerse_Feedback_${Date.now()}.txt`);
                 
                 alert('Thank you for your feedback, ' + name + '!\nYour feedback has been saved and downloaded.');
@@ -92,7 +89,6 @@ GeekVerse Team
         });
     }
 
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -105,7 +101,6 @@ GeekVerse Team
         });
     });
 
-    // Scroll animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -119,7 +114,6 @@ GeekVerse Team
     });
 });
 
-// Helper function to download file
 function downloadFile(content, filename) {
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
